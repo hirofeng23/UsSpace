@@ -1,4 +1,4 @@
-import { Timestamp } from "firebase/firestore";
+import { LocalTimestamp as Timestamp } from "@/lib/timestamp";
 
 export type MoodType =
   | "happy"

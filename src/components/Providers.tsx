@@ -1,7 +1,6 @@
 "use client";
 import { useEffect } from "react";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
-import { getFirebaseAnalytics } from "@/lib/firebase";
 import { AmbientBGM } from "./AmbientBGM";
 import { usePathname } from "next/navigation";
 
@@ -24,8 +23,6 @@ function ProvidersLogger() {
 
 export function Providers({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    getFirebaseAnalytics();
-
     const handleBlur = () => document.documentElement.classList.add("window-blurred");
     const handleFocus = () => document.documentElement.classList.remove("window-blurred");
     

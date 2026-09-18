@@ -5,7 +5,6 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 import { LoadingSpinner } from "@/components/ui/GlassCard";
-import { AuthDivider, SocialAuthButtons } from "@/components/SocialAuthButtons";
 import { GuestGuard } from "@/components/AuthGuard";
 import { useAuth } from "@/context/AuthContext";
 
@@ -20,28 +19,11 @@ export default function LoginPage() {
 
 function LoginForm() {
   console.log("LOGIN FORM RENDERED");
-  const { login, loginWithGoogle, loginWithApple } = useAuth();
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [socialLoading, setSocialLoading] = useState<"google" | "apple" | null>(null);
-
-  const handleSocialLogin = async (provider: "google" | "apple") => {
-    setSocialLoading(provider);
-    setError("");
-    try {
-      if (provider === "google") {
-        await loginWithGoogle();
-      } else {
-        await loginWithApple();
-      }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Sign in failed");
-    } finally {
-      setSocialLoading(null);
-    }
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,15 +52,6 @@ function LoginForm() {
         </div>
 
         <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
-          <SocialAuthButtons
-            onGoogle={() => handleSocialLogin("google")}
-            onApple={() => handleSocialLogin("apple")}
-            loading={socialLoading !== null}
-            disabled={loading}
-          />
-
-          <AuthDivider />
-
           <form onSubmit={handleSubmit}>
             <div className="space-y-4">
               <div>
@@ -109,7 +82,7 @@ function LoginForm() {
 
             <button
               type="submit"
-              disabled={loading || socialLoading !== null}
+              disabled={loading}
               className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-rose-500 to-pink-500 py-3 font-medium text-white transition hover:opacity-90 disabled:opacity-50"
             >
               {loading ? <LoadingSpinner size="sm" /> : "Sign In"}

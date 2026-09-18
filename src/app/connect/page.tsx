@@ -32,9 +32,7 @@ function ConnectForm() {
     ensureCoupleCodeIndex(profile)
       .then(() => setCodeReady(true))
       .catch(() => {
-        setCodeError(
-          "Could not register your code. Open Firebase Console → Firestore → Rules and publish the latest rules."
-        );
+        setCodeError("Could not register your code. Please try again.");
       });
   }, [profile, mode]);
 

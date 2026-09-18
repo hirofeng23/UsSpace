@@ -7,9 +7,8 @@ import { AuthGuard } from "@/components/AuthGuard";
 import { Navbar } from "@/components/Navbar";
 import { MemoryGallery } from "@/components/MemoryGallery";
 import { useAuth } from "@/context/AuthContext";
-import { getPartnerProfile, getMemoriesPaginated, toggleMemoryReaction } from "@/lib/firestore";
+import { getPartnerProfile, getMemoriesPaginated, toggleMemoryReaction, type MemoriesCursor } from "@/lib/firestore";
 import type { DailyMemory, UserProfile } from "@/types";
-import { type DocumentSnapshot } from "firebase/firestore";
 
 export default function GalleryPage() {
   return (
@@ -38,7 +37,7 @@ function GalleryContent() {
   const { user, profile, registerVerifiedUrls } = useAuth();
   const [memories, setMemories] = useState<DailyMemory[]>([]);
   const [partner, setPartner] = useState<UserProfile | null>(null);
-  const [lastVisible, setLastVisible] = useState<DocumentSnapshot | null>(null);
+  const [lastVisible, setLastVisible] = useState<MemoriesCursor>(null);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(true);

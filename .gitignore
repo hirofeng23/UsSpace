@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local "database" and uploaded photos/audio — this is runtime data, not
+# code, and it's private (your photos), so it never gets committed.
+/data/db.json
+/data/.session-secret
+/public/uploads/*
+!/public/uploads/.gitkeep

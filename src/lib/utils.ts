@@ -1,6 +1,6 @@
 import imageCompression from "browser-image-compression";
 import { format, differenceInYears, differenceInMonths, differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds, subDays } from "date-fns";
-import type { Timestamp } from "firebase/firestore";
+import type { LocalTimestamp as Timestamp } from "@/lib/timestamp";
 import type { DailyMemory } from "@/types";
 
 export function toSafeDate(value: Timestamp | null | undefined): Date | null {

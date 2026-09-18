@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Music, Volume2, VolumeX, Play, Pause, SkipForward, SkipBack, Heart, Sparkles } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
@@ -270,6 +271,14 @@ function TeluguSparkles() {
 
 export function AmbientBGM() {
   const { profile } = useAuth();
+  const pathname = usePathname();
+  // Pages with the bottom tab bar (Navbar) need the floating player pushed
+  // up above it on mobile; auth-flow screens (login/signup/connect/etc.)
+  // have no bottom nav, so the button can sit lower without covering the
+  // vertically-centered form's submit button.
+  const hasBottomNav = ["/dashboard", "/gallery", "/vault", "/settings"].some((p) =>
+    pathname?.startsWith(p)
+  );
   
   const [permission, setPermission] = useState<"pending" | "allowed" | "denied">("pending");
   const [isPlaying, setIsPlaying] = useState(false);
@@ -792,7 +801,11 @@ export function AmbientBGM() {
 
       {/* 2. Floating BGM Player Controller */}
       {permission === "allowed" && (
-        <div className="fixed bottom-24 right-4 z-50 md:bottom-6">
+        <div
+          className={`fixed right-4 z-50 md:bottom-6 ${
+            hasBottomNav ? "bottom-24" : "bottom-4"
+          }`}
+        >
           <div className="relative">
             
             {/* Music note floating trigger */}
